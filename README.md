@@ -39,7 +39,7 @@ You can find your library ID and create an API key in your Zotero account settin
 
 The [local Zotero API](https://groups.google.com/g/zotero-dev/c/ElvHhIFAXrY/m/fA7SKKwsAgAJ) can be used with Zotero 7 running on the same machine.
 
-> [!WARNING]
+> [!IMPORTANT]
 > An upcoming Zotero release is needed to support the fulltext API locally, in the meantime you'll need to install a [Zotero Beta Build](https://www.zotero.org/support/beta_builds) for that functionality to work (as of 2025-03-07). See https://github.com/zotero/zotero/pull/5004 for more information.
 
 ## Development
