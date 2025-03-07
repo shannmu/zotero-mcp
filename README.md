@@ -30,7 +30,7 @@ To use this with Claude Desktop, add the following to the `mcpServers` configura
 
 The following environment variables are supported:
 
-- `ZOTERO_LOCAL=true`: Use the local Zotero API (default: false)
+- `ZOTERO_LOCAL=true`: Use the local Zotero API (default: false) (
 - `ZOTERO_LIBRARY_ID`: Your Zotero library ID (not required for the local API)
 - `ZOTERO_LIBRARY_TYPE`: The type of library (user or group, default: user)
 - `ZOTERO_API_KEY`: Your Zotero API key (not required for the local API)
@@ -39,7 +39,8 @@ You can find your library ID and create an API key in your Zotero account settin
 
 The [local Zotero API](https://groups.google.com/g/zotero-dev/c/ElvHhIFAXrY/m/fA7SKKwsAgAJ) can be used with Zotero 7 running on the same machine.
 
-> n.b. An upcoming Zotero release is needed to support the fulltext API locally: https://github.com/zotero/zotero/pull/5004
+> [!WARNING]
+> An upcoming Zotero release is needed to support the fulltext API locally, in the meantime you'll need to install a [Zotero Beta Build](https://www.zotero.org/support/beta_builds) for that functionality to work (as of 2025-03-07). See https://github.com/zotero/zotero/pull/5004 for more information.
 
 ## Development
 
