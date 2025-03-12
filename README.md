@@ -2,6 +2,10 @@
 
 This project is a python server that implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) for [Zotero](https://www.zotero.org/), giving you access to your Zotero library within AI assistants. It is intended to implement a small but maximally useful set of interactions with Zotero for use with [MCP clients](https://modelcontextprotocol.io/clients).
 
+<a href="https://glama.ai/mcp/servers/jknz38ntu4">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/jknz38ntu4/badge" alt="Zotero Server MCP server" />
+</a>
+
 ## Features
 
 This MCP server provides the following tools:
