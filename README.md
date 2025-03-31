@@ -57,7 +57,33 @@ To use this with Claude Desktop and a direct python install with [`uvx`](https:/
 
 If you don't have `uvx` installed you can use `pipx run` instead, or clone this repository locally and use the instructions in [Development](#development) below.
 
+### Docker with Zotero Web API
+
+If you want to run this MCP server in a Docker container, you can use the following configuration, inserting your API key and library ID:
+
+```json
+{
+  "mcpServers": {
+    "zotero": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "-e", "ZOTERO_API_KEY=PLACEHOLDER",
+        "-e", "ZOTERO_LIBRARY_ID=PLACEHOLDER",
+        "ghcr.io/kujenga/zotero-mcp:main"
+      ],
+    }
+  }
+}
+```
+
+It is also possible to use the docker-based installation to talk to the local Zotero API, but you'll need to modify the above command to ensure that there is network connectivity to the Zotero application's local API interface.
+
 ## Development
+
+Information on making changes and contributing to the project.
 
 1. Clone this repository
 1. Install dependencies with [uv](https://docs.astral.sh/uv/) by running: `uv sync`
@@ -69,8 +95,7 @@ Start the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) 
 npx @modelcontextprotocol/inspector uv run zotero-mcp
 ```
 
-To test the local repository against Claude Desktop, run `echo $PWD/.venv/bin/zotero-mcp` in your shell within this directory, then set the following within your Claude Desktop configuration:
-
+To test the local repository against Claude Desktop, run `echo $PWD/.venv/bin/zotero-mcp` in your shell within this directory, then set the following within your Claude Desktop configuration
 ```json
 {
   "mcpServers": {
@@ -90,6 +115,26 @@ To run the test suite:
 
 ```bash
 uv run pytest
+```
+
+### Docker Development
+
+Build the container image with this command:
+
+```sh
+docker build . -t zotero-mcp:local
+```
+
+To test the container with the MCP inspector, run the following command:
+
+```sh
+npx @modelcontextprotocol/inspector \
+    -e ZOTERO_API_KEY=$ZOTERO_API_KEY \
+    -e ZOTERO_LIBRARY_ID=$ZOTERO_LIBRARY_ID \
+    docker run --rm -i \
+        --env ZOTERO_API_KEY \
+        --env ZOTERO_LIBRARY_ID \
+        zotero-mcp:local
 ```
 
 ## Relevant Documentation
