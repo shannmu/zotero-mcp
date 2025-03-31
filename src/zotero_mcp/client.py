@@ -15,13 +15,13 @@ def get_zotero_client() -> zotero.Zotero:
     """Get authenticated Zotero client using environment variables"""
     library_id = os.getenv("ZOTERO_LIBRARY_ID")
     library_type = os.getenv("ZOTERO_LIBRARY_TYPE", "user")
-    api_key = os.getenv("ZOTERO_API_KEY")
+    api_key = os.getenv("ZOTERO_API_KEY") or None
     local = os.getenv("ZOTERO_LOCAL", "").lower() in ["true", "yes", "1"]
-    if local and not library_id:
-        # Indicates "current user" for the local API
-        library_id = "0"
-
-    if not local or all([library_id, api_key]):
+    if local:
+        if not library_id:
+            # Indicates "current user" for the local API
+            library_id = "0"
+    elif not all([library_id, api_key]):
         raise ValueError(
             "Missing required environment variables. Please set ZOTERO_LIBRARY_ID and ZOTERO_API_KEY"
         )
