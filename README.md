@@ -16,7 +16,26 @@ Each tool returns formatted text containing relevant information from your Zoter
 
 ## Installation
 
-To use this with Claude Desktop, add the following to the `mcpServers` configuration:
+This server can either run against either a [local API offered by the Zotero desktop application](https://groups.google.com/g/zotero-dev/c/ElvHhIFAXrY/m/fA7SKKwsAgAJ)) or through the [Zotero Web API](https://www.zotero.org/support/dev/web_api/v3/start). The local API can be a bit more responsive, but requires that the Zotero app be running on the same computer with the API enabled. To enable the local API, do the following steps:
+
+1. Open Zotero and open "Zotero Settings"
+1. Under the "Advanced" tab, check the box that says "Allow other applications on this computer to communicate with Zotero".
+
+> [!IMPORTANT]
+> For access to the `/fulltext` endpoint on the local API which allows retrieving the full content of items in your library, you'll need to install a [Zotero Beta Build](https://www.zotero.org/support/beta_builds) (as of 2025-03-30). Once 7.1 is released this will no longer be the case. See https://github.com/zotero/zotero/pull/5004 for more information. If you do not want to do this, use the Web API instead.
+
+To use the Zotero Web API, you'll need to create an API key and find your Library ID (usually your User ID) in your Zotero account settings here: <https://www.zotero.org/settings/keys>
+
+These are the available configuration options:
+
+- `ZOTERO_LOCAL=true`: Use the local Zotero API (default: false, see note below)
+- `ZOTERO_API_KEY`: Your Zotero API key (not required for the local API)
+- `ZOTERO_LIBRARY_ID`: Your Zotero library ID (your user ID for user libraries, not required for the local API)
+- `ZOTERO_LIBRARY_TYPE`: The type of library (user or group, default: user)
+
+### [`uvx`](https://docs.astral.sh/uv/getting-started/installation/) with Local Zotero API
+
+To use this with Claude Desktop and a direct python install with [`uvx`](https://docs.astral.sh/uv/getting-started/installation/), add the following to the `mcpServers` configuration:
 
 ```json
 {
@@ -25,26 +44,16 @@ To use this with Claude Desktop, add the following to the `mcpServers` configura
       "command": "uvx",
       "args": ["zotero-mcp"],
       "env": {
-        "ZOTERO_LOCAL": "true"
+        "ZOTERO_LOCAL": "true",
+        "ZOTERO_API_KEY": "",
+        "ZOTERO_LIBRARY_ID": ""
       }
     }
   }
 }
 ```
 
-The `ZOTERO_LOCAL` setting points the plugin to the [local Zotero API](https://groups.google.com/g/zotero-dev/c/ElvHhIFAXrY/m/fA7SKKwsAgAJ) and requires Zotero 7 (or the beta version, see note below) running on the same machine as the client.
-
-To use the Zotero Web API, you'll need to create an API key and find your Library ID (usually your User ID) in your Zotero account settings here: <https://www.zotero.org/settings/keys>
-
-The following environment variables provide configuration options:
-
-- `ZOTERO_LOCAL=true`: Use the local Zotero API (default: false, see note below)
-- `ZOTERO_API_KEY`: Your Zotero API key (not required for the local API)
-- `ZOTERO_LIBRARY_ID`: Your Zotero library ID (your user ID for user libraries, not required for the local API)
-- `ZOTERO_LIBRARY_TYPE`: The type of library (user or group, default: user)
-
-> [!IMPORTANT]
-> For access to the fulltext API locally, an upcoming Zotero release is required. In the meantime you'll need to install a [Zotero Beta Build](https://www.zotero.org/support/beta_builds) for that functionality to work (as of 2025-03-07). See https://github.com/zotero/zotero/pull/5004 for more information.
+If you don't have `uvx` installed you can use `pipx run` instead, or clone this repository locally and use the instructions in [Development](#development) below.
 
 ## Development
 
@@ -56,6 +65,21 @@ Start the [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector) 
 
 ```bash
 npx @modelcontextprotocol/inspector uv run zotero-mcp
+```
+
+To test the local repository against Claude Desktop, run `echo $PWD/.venv/bin/zotero-mcp` in your shell within this directory, then set the following within your Claude Desktop configuration:
+
+```json
+{
+  "mcpServers": {
+    "zotero": {
+      "command": "/path/to/zotero-mcp/.venv/bin/zotero-mcp"
+      "env": {
+        // Whatever configuration is desired.
+      }
+    }
+  }
+}
 ```
 
 ### Running Tests
