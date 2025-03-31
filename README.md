@@ -1,6 +1,7 @@
 # Model Context Protocol server for Zotero
 
-![PyPI - Version](https://img.shields.io/pypi/v/zotero-mcp)
+[![GitHub branch status](https://img.shields.io/github/check-runs/kujenga/zotero-mcp/main)](https://github.com/kujenga/zotero-mcp/actions)
+[![PyPI - Version](https://img.shields.io/pypi/v/zotero-mcp)](https://pypi.org/project/zotero-mcp/)
 
 This project is a python server that implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) for [Zotero](https://www.zotero.org/), giving you access to your Zotero library within AI assistants. It is intended to implement a small but maximally useful set of interactions with Zotero for use with [MCP clients](https://modelcontextprotocol.io/clients).
 
