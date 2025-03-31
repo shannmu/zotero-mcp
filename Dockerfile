@@ -4,23 +4,19 @@ FROM python:3.13-slim-bookworm
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
 # Install application
-ADD . /app
+ADD README.md LICENSE pyproject.toml uv.lock src /app/
 WORKDIR /app
-RUN uv sync --frozen
+ENV UV_FROZEN=true
+RUN uv sync
 
-# Set default environment variables
-ENV ZOTERO_LOCAL=false
-ENV ZOTERO_API_KEY=""
-ENV ZOTERO_LIBRARY_ID=""
-ENV ZOTERO_LIBRARY_TYPE="user"
-
-# Expose port 8000, standard for MCP
-EXPOSE 8000
+# Check basic functionality
+RUN uv run zotero-mcp --help
 
 LABEL org.opencontainers.image.title="zotero-mcp"
 LABEL org.opencontainers.image.description="Model Context Protocol Server for Zotero"
 LABEL org.opencontainers.image.url="https://github.com/zotero/zotero-mcp"
 LABEL org.opencontainers.image.source="https://github.com/zotero/zotero-mcp"
+LABEL org.opencontainers.image.license="MIT"
 
 # Command to run the server
-CMD ["uv", "run", "zotero-mcp", "--transport", "sse"]
+ENTRYPOINT ["uv", "run", "--quiet", "zotero-mcp"]
