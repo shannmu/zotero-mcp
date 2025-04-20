@@ -49,7 +49,7 @@ To use this with Claude Desktop and a direct python install with [`uvx`](https:/
   "mcpServers": {
     "zotero": {
       "command": "uvx",
-      "args": ["zotero-mcp"],
+      "args": ["--update", "zotero-mcp"],
       "env": {
         "ZOTERO_LOCAL": "true",
         "ZOTERO_API_KEY": "",
@@ -60,7 +60,7 @@ To use this with Claude Desktop and a direct python install with [`uvx`](https:/
 }
 ```
 
-If you don't have `uvx` installed you can use `pipx run` instead, or clone this repository locally and use the instructions in [Development](#development) below.
+The `--update` flag is optional and will pull the latest version when new ones are available. If you don't have `uvx` installed you can use `pipx run` instead, or clone this repository locally and use the instructions in [Development](#development) below.
 
 ### Docker with Zotero Web API
 
@@ -84,7 +84,7 @@ If you want to run this MCP server in a Docker container, you can use the follow
 }
 ```
 
-It is also possible to use the docker-based installation to talk to the local Zotero API, but you'll need to modify the above command to ensure that there is network connectivity to the Zotero application's local API interface.
+To update to a newer version, run `docker pull ghcr.io/kujenga/zotero-mcp:main`. It is also possible to use the docker-based installation to talk to the local Zotero API, but you'll need to modify the above command to ensure that there is network connectivity to the Zotero application's local API interface.
 
 ## Development
 
